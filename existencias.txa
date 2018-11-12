@@ -1,0 +1,259 @@
+[PROCEDURE]
+NAME BrowsecostosGLP
+CATEGORY 'Browse'
+[COMMON]
+DESCRIPTION 'Costos_GLP'
+FROM ABC Window
+[DATA]
+CurrentTab                STRING(80)
+[FILES]
+[PRIMARY]
+Costos_GLP
+[INSTANCE]
+1
+[KEY]
+Cos:PK_COSTO
+[PROMPTS]
+%ButtonAction DEPEND %Control STRING TIMES 0
+
+%ButtonRunName DEPEND %Control STRING TIMES 0
+
+%ButtonRunParameters DEPEND %Control STRING TIMES 0
+
+%ButtonProcedure DEPEND %Control PROCEDURE TIMES 0
+
+%ButtonThread DEPEND %Control LONG TIMES 0
+
+%ButtonThreadStack DEPEND %Control @n7 TIMES 0
+
+%ButtonParameters DEPEND %Control STRING TIMES 0
+
+%ButtonRequest DEPEND %Control STRING TIMES 0
+
+%PreLookupKey DEPEND %Control KEY TIMES 0
+
+%PreLookupField DEPEND %Control COMPONENT TIMES 0
+
+%PreLookupProcedure DEPEND %Control PROCEDURE TIMES 0
+
+%PostLookupKey DEPEND %Control KEY TIMES 0
+
+%PostLookupField DEPEND %Control COMPONENT TIMES 0
+
+%PostLookupProcedure DEPEND %Control PROCEDURE TIMES 0
+
+%ForceWindowRefresh DEPEND %Control LONG TIMES 0
+[ADDITION]
+NAME ABC BrowseBox
+[INSTANCE]
+INSTANCE 1
+PROCPROP
+[PROMPTS]
+%AcceptToolbarControl LONG (0)
+%EnableQuickScan LONG  (0)
+
+%LocatorType DEFAULT  ('Step')
+%OverrideDefaultLocator DEFAULT ('')
+%OverrideLocator DEFAULT ('')
+
+%RecordFilter @S255  ('')
+
+%RangeField COMPONENT  ()
+
+%RangeLimitType DEFAULT  ('')
+%RangeLimit FIELD  ()
+%RangeLow FIELD  ()
+%RangeHigh FIELD  ()
+%RangeFile FILE  ()
+%ScrollBehavior DEFAULT  ('Fixed Thumb')
+%SortOrder MULTI LONG  ()
+%SortCondition DEPEND %SortOrder @S255 TIMES 0
+%SortKey DEPEND %SortOrder KEY TIMES 0
+%SortLocatorType DEPEND %SortOrder DEFAULT TIMES 0
+%SortOverrideDefaultLocator DEPEND %SortOrder DEFAULT TIMES 0
+%SortOverrideLocator DEPEND %SortOrder DEFAULT TIMES 0
+%SortRecordFilter DEPEND %SortOrder @S255 TIMES 0
+%SortRangeField DEPEND %SortOrder COMPONENT TIMES 0 !HOLA 0
+%SortRangeLimit DEPEND %SortOrder FIELD TIMES 0
+%SortRangeLow DEPEND %SortOrder FIELD TIMES 0
+%SortRangeHigh DEPEND %SortOrder FIELD TIMES 0
+%SortRangeFile DEPEND %SortOrder FILE TIMES 0
+%SortRangeLimitType DEPEND %SortOrder DEFAULT TIMES 0
+%SortScrollBehavior DEPEND %SortOrder DEFAULT TIMES 0
+%SortScrollKeyDistribution DEPEND %SortOrder STRING TIMES 0
+%SortCustomKeyDistribution DEPEND %SortOrder MULTI LONG TIMES 0
+%SortKeyDistributionValue DEPEND %SortCustomKeyDistribution @S10 TIMES 0
+%SortScrollAlpha DEPEND %SortOrder LONG TIMES 0
+%SortScrollNumeric DEPEND %SortOrder LONG TIMES 0
+%SortScrollAlt DEPEND %SortOrder LONG TIMES 0
+[ADDITION]
+NAME ABC BrowseViewButton
+[INSTANCE]
+INSTANCE 2
+PARENT 1
+[ADDITION]
+NAME ABC BrowseUpdateButtons
+[INSTANCE]
+INSTANCE 3
+PARENT 1
+PROCPROP
+[PROMPTS]
+%UpdateProcedure PROCEDURE  (updateCostosGLP)
+%EditViaPopup LONG  (0)
+[ADDITION]
+NAME ABC CloseButton
+[INSTANCE]
+INSTANCE 4
+[ADDITION]
+NAME ABC HelpButton
+[INSTANCE]
+INSTANCE 5
+[ADDITION]
+NAME ABC WindowResize
+[INSTANCE]
+INSTANCE 6
+[PROMPTS]
+%UseAppStrategy    DEFAULT (1)
+%AppStrategy       DEFAULT ('Surface')
+%RestrictMinSize   DEFAULT (1)
+%WindowMinWidth    DEFAULT (0)
+%WindowMaxWidth    DEFAULT (0)
+[WINDOW]
+QuickWindow WINDOW('Costos_GLP'),AT(,,340,209),IMM,RESIZE,GRAY,MDI,HLP('BrowsecostosGLP'),WALLPAPER('fondo.jpg'),FONT('Microsoft Sans Serif',8,,400,1),CENTER,SYSTEM
+    LIST,AT(8,30,324,113),USE(?Browse:1),MSG('Browsing the Costos_GLP file'),IMM,HVSCROLL,|
+      FORMAT('64R(2)|M~id costos~C(0)@n-14@60L(2)|M~fecha vigencia~L(2)@s8@80R(2)|M~fecha vigencia DATE~C(0)@d17@80R(2)|M~fecha vigencia TIME~C(0)@t7@48D(20)|M~costo~C(0)@n-10.2@'),|
+      FROM(Queue:Browse:1),#SEQ(1),#ORIG(?List),#FIELDS(Cos:id_costos,Cos:fecha_vigencia,Cos:fecha_vigencia_DATE,Cos:fecha_vigencia_TIME,Cos:costo)
+    BUTTON(''),AT(220,147,25,25),USE(?View:2),ICON('Ver.ico'),FLAT,MSG('Visualiza el registro'),TIP('Visualiza el registro'),#SEQ(2),#ORIG(?View)
+    BUTTON(''),AT(249,147,25,25),USE(?Insert:3),ICON('Insertar.ico'),FLAT,MSG('Inserta un Registro'),TIP('Inserta un Registro'),#SEQ(3),#ORIG(?Insert),#LINK(?Change:3)
+    BUTTON(''),AT(278,147,25,25),USE(?Change:3),ICON('Editar.ico'),FLAT,MSG('Modifica el registro'),TIP('Modifica el registro'),DEFAULT,#SEQ(3),#ORIG(?Change),#LINK(?Delete:3)
+    BUTTON(''),AT(307,147,25,25),USE(?Delete:3),ICON('Eliminar.ICO'),FLAT,MSG('Elimina un registro'),TIP('Elimina un registro'),#SEQ(3),#ORIG(?Delete),#LINK(?Insert:3)
+  SHEET,AT(4,4,332,172),USE(?CurrentTab),#ORIG(CurrentTab)
+    TAB('&1) ID COSTO'),USE(?Tab:2)
+    END
+  END
+  BUTTON(''),AT(282,180,25,25),USE(?Close),ICON('Cancelar.ico'),FLAT,MSG('Cerrar ventana'),TIP('Cerrar ventana'),#SEQ(4),#ORIG(?Close)
+  BUTTON('&Ayuda'),AT(311,180,25,25),USE(?Help),ICON('WAHELP.ICO'),FLAT,MSG('Muestra ventana de ayuda'),TIP('Muestra ventana de ayuda'),STD(STD:Help),#SEQ(5),#ORIG(?Help)
+ END
+[PROCEDURE]
+NAME updateCostosGLP
+CATEGORY 'Form'
+[COMMON]
+DESCRIPTION 'Formulario Costos_GLP'
+FROM ABC Window
+[DATA]
+CurrentTab                STRING(80)
+[FILES]
+[PRIMARY]
+Costos_GLP
+[INSTANCE]
+2
+[PROMPTS]
+%ButtonAction DEPEND %Control STRING TIMES 0
+
+%ButtonRunName DEPEND %Control STRING TIMES 0
+
+%ButtonRunParameters DEPEND %Control STRING TIMES 0
+
+%ButtonProcedure DEPEND %Control PROCEDURE TIMES 0
+
+%ButtonThread DEPEND %Control LONG TIMES 0
+
+%ButtonThreadStack DEPEND %Control @n7 TIMES 0
+
+%ButtonParameters DEPEND %Control STRING TIMES 0
+
+%ButtonRequest DEPEND %Control STRING TIMES 0
+
+%PreLookupKey DEPEND %Control KEY TIMES 0
+
+%PreLookupField DEPEND %Control COMPONENT TIMES 0
+
+%PreLookupProcedure DEPEND %Control PROCEDURE TIMES 0
+
+%PostLookupKey DEPEND %Control KEY TIMES 0
+
+%PostLookupField DEPEND %Control COMPONENT TIMES 0
+
+%PostLookupProcedure DEPEND %Control PROCEDURE TIMES 0
+
+%ForceWindowRefresh DEPEND %Control LONG TIMES 0
+[ADDITION]
+NAME ABC RecordValidation
+[INSTANCE]
+INSTANCE 1
+PROCPROP
+[PROMPTS]
+%ValidateOnAccept LONG  (0)
+%ValidateOnNonStopSelect LONG  (0)
+%ControlsExcluded MULTI LONG  ()
+%ControlToExclude DEPEND %ControlsExcluded STRING TIMES 0
+[ADDITION]
+NAME ABC SaveButton
+[INSTANCE]
+INSTANCE 2
+PROCPROP
+[PROMPTS]
+%InsertAllowed LONG  (1)
+%InsertMessage @S40  ('Record Will Be Added')
+%ChangeAllowed LONG  (1)
+%ChangeMessage @S40  ('Record Will Be Changed')
+%DeleteAllowed LONG  (1)
+%DeleteMessage @S40  ('Record Will Be Deleted')
+%ViewMessage @S40  ('View Record')
+%MessageHeader LONG  (0)
+%ActionOnDelete STRING  ('Standard Warning')
+%PrimingFields MULTI LONG  ()
+%PrimedField DEPEND %PrimingFields FIELD TIMES 0
+
+%PrimedValue DEPEND %PrimingFields @S255 TIMES 0
+
+%ActionOnCancel STRING  ('Confirm cancel')
+%MessageLocation STRING  ('Status Bar')
+%MessageStatusSection @n1  (2)
+
+%HistoryKey        DEFAULT (CtrlH)
+
+%AppendToTitle LONG  ()
+%AppendToTitleID @S255  ('')
+[ADDITION]
+NAME ABC CancelButton
+[INSTANCE]
+INSTANCE 3
+[ADDITION]
+NAME ABC HelpButton
+[INSTANCE]
+INSTANCE 4
+[ADDITION]
+NAME ABC ViewFormActions
+[INSTANCE]
+INSTANCE 5
+[ADDITION]
+NAME ABC WindowResize
+[INSTANCE]
+INSTANCE 6
+[PROMPTS]
+%UseAppStrategy    DEFAULT (1)
+%AppStrategy       DEFAULT ('Surface')
+%RestrictMinSize   DEFAULT (1)
+%WindowMinWidth    DEFAULT (0)
+%WindowMaxWidth    DEFAULT (0)
+[WINDOW]
+QuickWindow WINDOW('Formulario Costos_GLP'),AT(,,204,123),RESIZE,IMM,GRAY,MDI,HLP('updateCostosGLP'),WALLPAPER('fondo.jpg'),FONT('Microsoft Sans Serif',8,,400,1),CENTER,SYSTEM
+  SHEET,AT(4,4,196,86),USE(?CurrentTab),#ORIG(CurrentTab)
+    TAB('&1) General'),USE(?Tab:1)
+         PROMPT('id costos:'),USE(?Cos:id_costos:Prompt),TRN,AT(8,20),#ORIG(?Cos:id_costos:Prompt),#LINK(Cos:id_costos)
+         ENTRY(@n-14),USE(Cos:id_costos),RIGHT(1),AT(92,20,64,10),#ORIG(Cos:id_costos),#LINK(?Cos:id_costos:Prompt)
+         PROMPT('fecha vigencia:'),USE(?Cos:fecha_vigencia:Prompt),TRN,AT(8,34),#ORIG(?Cos:fecha_vigencia:Prompt),#LINK(Cos:fecha_vigencia)
+         ENTRY(@s8),USE(Cos:fecha_vigencia),AT(92,34,40,10),#ORIG(Cos:fecha_vigencia),#LINK(?Cos:fecha_vigencia:Prompt)
+         PROMPT('fecha vigencia DATE:'),USE(?Cos:fecha_vigencia_DATE:Prompt),TRN,AT(8,48),#ORIG(?Cos:fecha_vigencia_DATE:Prompt),#LINK(Cos:fecha_vigencia_DATE)
+         ENTRY(@d17),USE(Cos:fecha_vigencia_DATE),AT(92,48,104,10),#ORIG(Cos:fecha_vigencia_DATE),#LINK(?Cos:fecha_vigencia_DATE:Prompt)
+         PROMPT('fecha vigencia TIME:'),USE(?Cos:fecha_vigencia_TIME:Prompt),TRN,AT(8,62),#ORIG(?Cos:fecha_vigencia_TIME:Prompt),#LINK(Cos:fecha_vigencia_TIME)
+         ENTRY(@t7),USE(Cos:fecha_vigencia_TIME),AT(92,62,104,10),#ORIG(Cos:fecha_vigencia_TIME),#LINK(?Cos:fecha_vigencia_TIME:Prompt)
+         PROMPT('costo:'),USE(?Cos:costo:Prompt),TRN,AT(8,76),#ORIG(?Cos:costo:Prompt),#LINK(Cos:costo)
+         ENTRY(@n-10.2),USE(Cos:costo),DECIMAL(12),AT(92,76,48,10),#ORIG(Cos:costo),#LINK(?Cos:costo:Prompt)
+    END
+  END
+  BUTTON(''),AT(117,94,25,25),USE(?OK),ICON('ok.ICO'),FLAT,MSG('Acepta los datos y cierra ventana'),TIP('Acepta los datos y cierra ventana'),DEFAULT,#SEQ(2),#ORIG(?OK)
+  BUTTON(''),AT(146,94,25,25),USE(?Cancel),ICON('Cancelar.ico'),FLAT,MSG('Cancela operación'),TIP('Cancela operación'),#SEQ(3),#ORIG(?Cancel)
+  BUTTON(''),AT(175,94,25,25),USE(?Help),ICON('WAHELP.ICO'),FLAT,MSG('Mostrar ventana de ayuda'),TIP('Mostrar ventana de ayuda'),STD(STD:Help),#SEQ(4),#ORIG(?Help)
+ END

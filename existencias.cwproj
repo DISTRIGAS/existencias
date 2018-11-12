@@ -1,0 +1,95 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{6F6F52FD-5868-421B-9333-58977540D6CC}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">Win32</Platform>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>existencias</AssemblyName>
+    <OutputName>existencias</OutputName>
+    <DefineConstants>_POTPDllMode_=&gt;0%3b_POTPLinkMode_=&gt;1%3b_ABCDllMode_=&gt;0%3b_ABCLinkMode_=&gt;1%3b_GRAPHDllMode_=&gt;0%3b_GRAPHLinkMode_=&gt;1%3b</DefineConstants>
+    <Model>Dll</Model>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <vid>full</vid>
+    <check_stack>True</check_stack>
+    <check_index>True</check_index>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <vid>off</vid>
+    <check_stack>False</check_stack>
+    <check_index>False</check_index>
+  </PropertyGroup>
+  <ItemGroup>
+    <FileDriver Include="DOS" />
+    <FileDriver Include="MEMORY" />
+    <FileDriver Include="MSSQL" />
+    <FileDriver Include="TOPSPEED" />
+    <Compile Include="existencias.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="existencias001.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="existencias002.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="existencias003.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="existencias004.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="existencias005.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="existencias006.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="existencias007.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="existencias008.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="existencias009.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="existencias010.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="existencias011.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="EXISTENCIAS_BC.CLW">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="existencias_BC0.CLW">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="existencias_BC1.CLW">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="existencias_BC2.CLW">
+      <Generated>true</Generated>
+    </Compile>
+    <Library Include="ClaDOS.lib" />
+    <Library Include="Claevo.lib" />
+    <Library Include="ClaOLE.lib" />
+    <Library Include="existencias.Version" />
+    <Library Include="no.ICO" />
+    <Library Include="taskxpc.ico" />
+    <Library Include="taskxpcs.ico" />
+    <Library Include="taskxpcsw.ico" />
+    <Library Include="taskxpcw.ico" />
+    <Library Include="taskxpe.ico" />
+    <Library Include="taskxpes.ico" />
+    <Library Include="taskxpesw.ico" />
+    <Library Include="taskxpew.ico" />
+    <Library Include="total.ICO" />
+  </ItemGroup>
+  <Import Project="$(ClarionBinPath)\SoftVelocity.Build.Clarion.targets" />
+</Project>
